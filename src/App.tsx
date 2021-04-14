@@ -4,6 +4,7 @@ import { Error } from './features/error/Error';
 import { Quote } from './features/quote/Quote';
 import './App.css';
 import 'tailwindcss/tailwind.css';
+import { Quotes } from './features/quotes/Quotes';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Error />
         <h2>I'm Quote Generator, Hai</h2>
         <Background />
-        <Quote />
+        <Quotes />
       </header>
     </div>
   );

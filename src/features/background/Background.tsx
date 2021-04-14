@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { requestBackground, selectBackground, setBackgroundLoaded } from './backgroundSlice'
-import { selectQuote } from '../quote/quoteSlice';
+import { selectQuotes } from '../quotes/quotesSlice';
 import { Blurhash } from 'react-blurhash';
 import 'tailwindcss/tailwind.css';
 
 export function Background() {
     const backgroundState = useSelector(selectBackground);
-    const quoteState = useSelector(selectQuote);
+    const quotesState = useSelector(selectQuotes);
     const dispatch = useDispatch();
 
     return <>
@@ -40,7 +40,7 @@ export function Background() {
                          top: '50%',
                          left: '50%',
                          transform: 'translate(-50%, -50%)'
-                    }}>{quoteState.quote}</p>
+                    }}>{quotesState.data[quotesState.selectedQuoteIndex]?.quote}</p>
                 </div>
             </div>
         </div>

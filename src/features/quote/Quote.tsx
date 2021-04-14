@@ -1,10 +1,9 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { requestQuote, selectQuote } from './quoteSlice';
+import { useDispatch } from 'react-redux';
+import { requestQuote } from './quoteSlice';
 import 'tailwindcss/tailwind.css';
 
 export function Quote() {
-    const quoteState = useSelector(selectQuote);
     const dispatch = useDispatch();
 
     return <>
