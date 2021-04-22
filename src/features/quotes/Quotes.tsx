@@ -7,9 +7,8 @@ export function Quotes() {
     const quotesState = useSelector(selectQuotes);
     const dispatch = useDispatch();
 
-
     return <>
-        <div className="flex-col w-500px">
+        <div className="flex-col w-500px mt-3">
             <button
                 className="bg-blue-400 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
                 onClick={() => dispatch(loadQuotesAsync())}>
@@ -17,15 +16,18 @@ export function Quotes() {
             </button>
             <div>
                 {quotesState.data.map((quote, index) => (
-                    <div key={quote.id}>
-                        <button disabled={quotesState.isLoaded} onClick={() => dispatch(selectQuote(index))}>
-                            {quote.quote}
-                        </button>
-                        <br />
-                    </div>
+                    <button key={quote.id}
+                        className="text-white font-bold bg-blue-200 mb-1 rounded" 
+                        // disabled={quotesState.isLoaded} 
+                        onClick={() => {
+                            console.log('clicked'); 
+                            dispatch(selectQuote(index))
+                        }}
+                    >
+                        {quote.quote}
+                    </button>
                 ))}
             </div>
         </div>
-
-    </>;
+    </>
 }

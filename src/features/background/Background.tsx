@@ -11,12 +11,12 @@ export function Background() {
     const dispatch = useDispatch();
 
     return <>
-        <div className="flex-col m-9" id="background">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 animate-pulse"
+        <div className="flex flex-col m-1 items-center" id="background">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6 animate-pulse"
                 onClick={() => dispatch(requestBackground())}>
                 <p>{backgroundState.buttonText} &#10132;</p>
             </button>
-            <div>
+            <div className="flex flex-col items-center">
                 {backgroundState.isBackgroundLoaded === false &&
                     <Blurhash 
                         hash={backgroundState.blurHash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}

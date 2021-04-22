@@ -9,7 +9,7 @@ export function Error() {
 
     return <>
         {!errorState.isResolved && 
-        <div className="flex items-center">
+        <div className="flex justify-center items-center bg-red-500">
             <p className=""> Error! &nbsp;</p>
             <p> {errorState.message} &nbsp;</p>
             <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"

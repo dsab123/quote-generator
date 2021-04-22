@@ -2,14 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { createApi } from 'unsplash-js';
 import { raiseError } from '../error/errorSlice';
+import { Background } from '../../types';
 
-interface Background {
-    id: string,
-    uri: string,
-    isBackgroundLoaded: boolean,
-    blurHash?: string,
-    buttonText: string
-};
 
 const initialState: Background = {
     id: '',
@@ -42,9 +36,6 @@ export const background = createSlice({
             state.uri = '';
             state.blurHash = undefined;
         }
-
-        // todo daniel add handler for 
-        // download background, which will need to call Unsplash's /photos/:id/download
     }
 });
 

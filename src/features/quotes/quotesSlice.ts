@@ -10,8 +10,6 @@ const initialState: Quotes = {
     isLoaded: false
 }
 
-
-// quote about fauna client I think
 export const quotes = createSlice({
     name: 'Quotes',
     initialState,
@@ -47,5 +45,4 @@ export const loadQuotesAsync = (): AppThunk => async dispatch => {
 
 // this would be the mapper
 export const selectQuotes = (state: RootState) => state.quotes;
-
 export default quotes.reducer;
