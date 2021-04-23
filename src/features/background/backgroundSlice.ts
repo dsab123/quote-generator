@@ -1,15 +1,20 @@
+import { INTERNAL_ERROR_STATUS, STATUS_OK } from './../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { createApi } from 'unsplash-js';
 import { raiseError } from '../error/errorSlice';
 import { Background } from '../../types';
 
+export const defaultBlurHash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
+export const initialButtonText = 'load quotes';
+export const loadedButtonText = 'another!'
 
 const initialState: Background = {
     id: '',
     isBackgroundLoaded: false,
     uri: '',
-    buttonText: 'Get Image '
+    buttonText: 'Get Image ',
+    blurHash: defaultBlurHash
 };
 
 const serverApi = createApi({
@@ -29,7 +34,7 @@ export const background = createSlice({
             state.uri = action.payload.uri;
             state.blurHash = action.payload.blurHash;
             state.isBackgroundLoaded = false;
-            state.buttonText = 'Another!'
+            state.buttonText = loadedButtonText;
         },
         resetBackground: state => {
             state.id = '';
@@ -45,7 +50,9 @@ export const requestBackground = (): AppThunk => async dispatch => {
     try {
         const result = await serverApi.photos.getRandom({query: 'sky', orientation: 'landscape'});
 
-        if (result.status !== 200) return dispatch(raiseError(backgroundApiServerError));
+        if (result.status !== STATUS_OK) {
+            return dispatch(raiseError(backgroundApiServerError));
+        }
 
         const uri = `${result.response?.urls.raw}q=75&fm=jpg&w=500&h=500&fit=crop` ?? '';
 
@@ -62,7 +69,7 @@ export const requestBackground = (): AppThunk => async dispatch => {
 };
 
 const backgroundApiServerError = {
-    statusCode: 500,
+    statusCode: INTERNAL_ERROR_STATUS,
     message: "Something happened with the Image Api!"
 }
 

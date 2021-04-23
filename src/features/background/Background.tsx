@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { requestBackground, selectBackground, setBackgroundLoaded } from './backgroundSlice'
+import { defaultBlurHash, requestBackground, selectBackground, setBackgroundLoaded } from './backgroundSlice'
 import { selectQuotes } from '../quotes/quotesSlice';
 import { Blurhash } from 'react-blurhash';
 import 'tailwindcss/tailwind.css';
@@ -18,13 +18,14 @@ export function Background() {
             </button>
             <div className="flex flex-col items-center">
                 {backgroundState.isBackgroundLoaded === false &&
-                    <Blurhash 
-                        hash={backgroundState.blurHash ?? 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'}
+                    <Blurhash
+                        hash={backgroundState.blurHash ?? defaultBlurHash}
                         width={500}
                         height={500}
                         resolutionX={32}
                         resolutionY={32}
-                        punch={1} /> 
+                        punch={1} 
+                    /> 
                 }
                 
                 <div>
@@ -40,7 +41,7 @@ export function Background() {
                          top: '50%',
                          left: '50%',
                          transform: 'translate(-50%, -50%)'
-                    }}>{quotesState.data[quotesState.selectedQuoteIndex]?.quote}</p>
+                    }}>{quotesState.data[quotesState.selectedIndex]?.quote}</p>
                 </div>
             </div>
         </div>

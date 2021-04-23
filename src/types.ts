@@ -20,6 +20,13 @@ export interface Quote {
 
 export interface Quotes {
     data: Quote[],
-    selectedQuoteIndex: number,
-    isLoaded: boolean
+    selectedIndex: number
 }
+
+export const STATUS_OK = 200;
+
+export const INTERNAL_ERROR_STATUS = 500;
+export const INTERNAL_ERROR_MESSAGE = 'whoa, an internal (possibly API) error happened!';
+
+export const LOGIC_ERROR_STATUS = -1;
+export const LOGIC_ERROR_MESSAGE = 'whoa, a logic error happened!';

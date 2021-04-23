@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadQuotesAsync, selectQuote, selectQuotes } from './quotesSlice';
+import { initialButtonText } from '../background/backgroundSlice';
 import 'tailwindcss/tailwind.css';
 
 export function Quotes() {
@@ -12,13 +13,12 @@ export function Quotes() {
             <button
                 className="bg-blue-400 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
                 onClick={() => dispatch(loadQuotesAsync())}>
-                    load quotes
+                    {initialButtonText}
             </button>
             <div>
                 {quotesState.data.map((quote, index) => (
                     <button key={quote.id}
                         className="text-white font-bold bg-blue-200 mb-1 rounded" 
-                        // disabled={quotesState.isLoaded} 
                         onClick={() => {
                             console.log('clicked'); 
                             dispatch(selectQuote(index))
