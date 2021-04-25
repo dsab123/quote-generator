@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action, applyMiddleware, Middleware } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, Middleware } from '@reduxjs/toolkit';
 import backgroundReducer from '../features/background/backgroundSlice';
 import errorReducer from '../features/error/errorSlice';
 import quotesReducer from '../features/quotes/quotesSlice';

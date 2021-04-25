@@ -17,7 +17,7 @@ export function Background() {
                 <p>{backgroundState.buttonText} &#10132;</p>
             </button>
             <div className="flex flex-col items-center">
-                {backgroundState.isBackgroundLoaded === false &&
+                {backgroundState.isLoaded === false &&
                     <Blurhash
                         hash={backgroundState.blurHash ?? defaultBlurHash}
                         width={500}
@@ -32,7 +32,7 @@ export function Background() {
                     <img 
                     alt="background-quote" 
                     src={backgroundState.uri} 
-                    style={{display: backgroundState.isBackgroundLoaded ? 'block': 'none'}}
+                    style={{display: backgroundState.isLoaded ? 'block': 'none'}}
                     onLoad={() => {
                         dispatch(setBackgroundLoaded());
                     }} />

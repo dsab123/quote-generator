@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { Error, STATUS_OK } from '../../types';
+import { Error, OK_STATUS } from '../../types';
 
 const initialState: Error = {
-    statusCode: STATUS_OK,
+    statusCode: OK_STATUS,
     message: '',
     isResolved: true
 }

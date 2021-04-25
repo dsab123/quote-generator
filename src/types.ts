@@ -1,7 +1,7 @@
 export interface Background {
     id: string,
     uri: string,
-    isBackgroundLoaded: boolean,
+    isLoaded: boolean,
     blurHash?: string,
     buttonText: string
 };
@@ -23,7 +23,7 @@ export interface Quotes {
     selectedIndex: number
 }
 
-export const STATUS_OK = 200;
+export const OK_STATUS = 200;
 
 export const INTERNAL_ERROR_STATUS = 500;
 export const INTERNAL_ERROR_MESSAGE = 'whoa, an internal (possibly API) error happened!';

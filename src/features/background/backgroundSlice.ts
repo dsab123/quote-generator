@@ -1,4 +1,4 @@
-import { INTERNAL_ERROR_STATUS, STATUS_OK } from './../../types';
+import { INTERNAL_ERROR_STATUS, OK_STATUS } from './../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { createApi } from 'unsplash-js';
@@ -11,46 +11,47 @@ export const loadedButtonText = 'another!'
 
 const initialState: Background = {
     id: '',
-    isBackgroundLoaded: false,
+    isLoaded: false,
     uri: '',
     buttonText: 'Get Image ',
     blurHash: defaultBlurHash
 };
 
-const serverApi = createApi({
+const unsplashApiClient = createApi({
     accessKey: 'Xu20sZlB4AW-AiyA3rIGlY7AhjwlUrjPB1MEEjKdQUk' 
     // todo move to env.local
   });
 
 export const background = createSlice({
-    name: 'Background',
+    name: 'background',
     initialState,
     reducers: {
         setBackgroundLoaded: state => {
-            state.isBackgroundLoaded = true;
+            state.isLoaded = true;
         },
         changeBackground: (state: Background, action: PayloadAction<Background>) => {
             state.id = action.payload.id;
             state.uri = action.payload.uri;
             state.blurHash = action.payload.blurHash;
-            state.isBackgroundLoaded = false;
+            state.isLoaded = false;
             state.buttonText = loadedButtonText;
         },
         resetBackground: state => {
             state.id = '';
             state.uri = '';
-            state.blurHash = undefined;
+            state.blurHash = defaultBlurHash;
         }
     }
 });
 
-export const { changeBackground, setBackgroundLoaded } = background.actions;
+export const { changeBackground, setBackgroundLoaded, resetBackground } = background.actions;
 
-export const requestBackground = (): AppThunk => async dispatch => {
+// todo daniel add search parameter instead of hardcoding 'sky'
+export const requestBackground = (apiClient: any = unsplashApiClient): AppThunk => async dispatch => {
     try {
-        const result = await serverApi.photos.getRandom({query: 'sky', orientation: 'landscape'});
+        const result = await apiClient.photos.getRandom({query: 'sky', orientation: 'landscape'});
 
-        if (result.status !== STATUS_OK) {
+        if (result.status !== OK_STATUS) {
             return dispatch(raiseError(backgroundApiServerError));
         }
 
@@ -60,7 +61,7 @@ export const requestBackground = (): AppThunk => async dispatch => {
             id: result.response?.id ?? '',
             uri: uri,
             blurHash: result.response?.blur_hash ?? undefined,
-            isBackgroundLoaded: false,
+            isLoaded: false,
             buttonText: ''
         }));
     } catch (reason) {
@@ -68,10 +69,10 @@ export const requestBackground = (): AppThunk => async dispatch => {
     }
 };
 
-const backgroundApiServerError = {
+export const backgroundApiServerError = {
     statusCode: INTERNAL_ERROR_STATUS,
     message: "Something happened with the Image Api!"
-}
+};
 
 // this would be the mapper
 export const selectBackground = (state: RootState) => state.background

@@ -44,12 +44,12 @@ describe('quotesSlice tests', () => {
         thunk(dispatch, getState);
 
         expect(result.length).toBe(2);
-        expect(result[0].type).toBe("error/raiseError");
+        expect(result[0].type).toBe('error/raiseError');
         expect(result[0].payload).toStrictEqual({
             message: LOGIC_ERROR_MESSAGE,
             statusCode: LOGIC_ERROR_STATUS
         });
-        expect(result[1].type).toBe("quotes/updateQuoteIndex");
+        expect(result[1].type).toBe('quotes/updateQuoteIndex');
         expect(result[1].payload).toBe(0);
     });
 
