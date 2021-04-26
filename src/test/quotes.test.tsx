@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import quotesReducer from '../features/quotes/quotesSlice';
 import { selectQuote, loadQuotes, updateQuoteIndex, loadQuotesAsync } from '../features/quotes/quotesSlice';
-import { Quotes, LOGIC_ERROR_STATUS, LOGIC_ERROR_MESSAGE, INTERNAL_ERROR_MESSAGE } from '../types';
+import { Quotes, LOGIC_ERROR_STATUS, LOGIC_ERROR_MESSAGE, INTERNAL_ERROR_MESSAGE, Quote, INTERNAL_ERROR_STATUS } from '../types';
 
 const initialState: Quotes = {
     data: [],
@@ -16,6 +16,14 @@ const newState: Quotes = {
     }],
     selectedIndex: 0
 };
+
+function createQuotesClientMock(): any {
+    return {
+        fetchQuotes: () => {
+            return newState.data;
+        }
+    }
+}
 
 const getState = () => {};
 const fulfilled = {get: () => Promise.resolve({data: [{}]})};
@@ -53,24 +61,33 @@ describe('quotesSlice tests', () => {
         expect(result[1].payload).toBe(0);
     });
 
-    it('loadQuotesAsync thunk - ', async () => {
-        // TODO figure out how to mock fauna client?
-        
-        // let result: Array<PayloadAction> = [];
-        
-        // const dispatch = (action: PayloadAction<any>) => result.push(action); 
-        // const getState = () => ({quotes: {...initialState}});
-        // const thunk: any = loadQuotesAsync();
+    it('loadQuotesAsync thunk - valid result dispatches loadQuotes', async () => {
+        let result: Array<PayloadAction> = [];
 
-        // await thunk(dispatch, getState, fulfilled);
+        const dispatch = (action: PayloadAction<any>) => result.push(action); 
+        const getState = () => ({quotes: {...initialState}});
+        const thunk: any = loadQuotesAsync(createQuotesClientMock());
 
-        // expect(result.length).toBe(1);
-        // expect(result[0].type).toBe("error/raiseError");
-        // expect(result[0].payload).toStrictEqual({
-        //     message: LOGIC_ERROR_MESSAGE,
-        //     statusCode: LOGIC_ERROR_STATUS
-        // });
-        // expect(result[1].type).toBe("quotes/updateQuoteIndex");
-        // expect(result[1].payload).toBe(0);
+        await thunk(dispatch, getState, fulfilled);
+
+        expect(result.length).toBe(1);
+        expect(result[0].type).toBe("quotes/loadQuotes");
+    });
+
+    it('loadQuotesAsync thunk - invalid result raises error', async () => {
+        let result: Array<PayloadAction> = [];
+
+        const dispatch = (action: PayloadAction<any>) => result.push(action); 
+        const getState = () => ({quotes: {...initialState}});
+        const thunk: any = loadQuotesAsync({});
+
+        await thunk(dispatch, getState, fulfilled);
+
+        expect(result.length).toBe(1);
+        expect(result[0].type).toBe("error/raiseError");
+        expect(result[0].payload).toStrictEqual({
+            message: INTERNAL_ERROR_MESSAGE,
+            statusCode: INTERNAL_ERROR_STATUS
+        });
     });
 });

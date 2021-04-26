@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from '../../app/store';
 import { raiseError } from '../error/errorSlice';
 import { Quotes } from '../../types';
-import { fetchQuotes } from '../../utils/Fauna';   
+import { myFaunaClient } from '../../utils/Fauna';
 
 const initialState: Quotes = {
     data: [],
@@ -25,9 +25,9 @@ export const quotes = createSlice({
 
 export const { loadQuotes, updateQuoteIndex } = quotes.actions;
 
-export const loadQuotesAsync = (): AppThunk => async (dispatch, getState, axios) => {
+export const loadQuotesAsync = (quotesClient: any = myFaunaClient): AppThunk => async (dispatch, getState, axios) => {
     try {
-        const quotes = await fetchQuotes();
+        const quotes = await quotesClient.fetchQuotes();
 
         dispatch(loadQuotes({
             data: quotes
