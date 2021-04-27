@@ -5,6 +5,9 @@ import { raiseError } from '../error/errorSlice';
 import { Quotes } from '../../types';
 import { myFaunaClient } from '../../utils/Fauna';
 
+export const initialQuotesButtonText = 'load quotes';
+export const randomQuotesButtonText = 'random quote!'
+
 const initialState: Quotes = {
     data: [],
     selectedIndex: 0
@@ -19,11 +22,31 @@ export const quotes = createSlice({
         },
         updateQuoteIndex: (state, action: PayloadAction<number>) => {
             state.selectedIndex = action.payload;
+        },
+        updateRandomQuoteIndex: (state) => {
+            // returns an index within our data array bounds
+            let candidateIndex = 0;
+
+            while(candidateIndex === state.selectedIndex) {
+                candidateIndex = Math.abs(Math.floor(Math.random() * state.data.length - 1))
+            }
+
+            state.selectedIndex = candidateIndex;
+        },
+        setNextQuoteIndex: (state) => {
+            state.selectedIndex = Math.abs((state.selectedIndex + 1) % state.data.length);
+        },
+        setPreviousQuoteIndex: (state) => {
+            if (state.selectedIndex === 0) {
+                state.selectedIndex = state.data.length - 1
+            } else {
+                state.selectedIndex = Math.abs((state.selectedIndex - 1) % state.data.length);
+            }
         }
     }
 });
 
-export const { loadQuotes, updateQuoteIndex } = quotes.actions;
+export const { loadQuotes, updateQuoteIndex, updateRandomQuoteIndex, setNextQuoteIndex, setPreviousQuoteIndex } = quotes.actions;
 
 export const loadQuotesAsync = (quotesClient: any = myFaunaClient): AppThunk => async (dispatch, getState, axios) => {
     try {

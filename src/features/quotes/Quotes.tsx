@@ -1,33 +1,30 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadQuotesAsync, selectQuote, selectQuotes } from './quotesSlice';
-import { initialButtonText } from '../background/backgroundSlice';
+import { useDispatch } from 'react-redux';
+import { updateRandomQuoteIndex, randomQuotesButtonText, setNextQuoteIndex, setPreviousQuoteIndex } from './quotesSlice';
 import 'tailwindcss/tailwind.css';
 
+// todo rename this pls
 export function Quotes() {
-    const quotesState = useSelector(selectQuotes);
     const dispatch = useDispatch();
 
     return <>
-        <div className="flex-col w-500px mt-3">
+        <div className="flex-col w-500px mt-3 mb-4">
             <button
-                className="bg-blue-400 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
-                onClick={() => dispatch(loadQuotesAsync())}>
-                    {initialButtonText}
+                className="bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded ml-3"
+                onClick={() => dispatch(updateRandomQuoteIndex())}>
+                    {randomQuotesButtonText}
             </button>
-            <div>
-                {quotesState.data.map((quote, index) => (
-                    <button key={quote.id}
-                        className="text-white font-bold bg-blue-200 mb-1 rounded" 
-                        onClick={() => {
-                            console.log('clicked'); 
-                            dispatch(selectQuote(index))
-                        }}
-                    >
-                        {quote.quote}
-                    </button>
-                ))}
-            </div>
+            <button
+                className="bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded ml-3"
+                onClick={() => dispatch(setPreviousQuoteIndex())}>
+                ← prev
+            </button>
+            <button
+                className="bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded ml-3"
+                onClick={() => dispatch(setNextQuoteIndex())}>
+                next →
+            </button>
         </div>
+
     </>
 }

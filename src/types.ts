@@ -6,6 +6,11 @@ export interface Background {
     buttonText: string
 };
 
+export interface Backgrounds {
+    data: Array<Background>,
+    selectedIndex: number
+}
+
 export interface Error {
     statusCode: number;
     message: string;
@@ -19,7 +24,7 @@ export interface Quote {
 };
 
 export interface Quotes {
-    data: Quote[],
+    data: Array<Quote>,
     selectedIndex: number
 }
 

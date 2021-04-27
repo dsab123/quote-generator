@@ -6,14 +6,14 @@ import { raiseError } from '../error/errorSlice';
 import { Background } from '../../types';
 
 export const defaultBlurHash = 'LEHV6nWB2yk8pyo0adR*.7kCMdnj';
-export const initialButtonText = 'load quotes';
-export const loadedButtonText = 'another!'
+export const initialBackgroundButtonText = 'get image!'
+export const loadedBackgroundButtonText = 'random image!'
 
 const initialState: Background = {
     id: '',
     isLoaded: false,
     uri: '',
-    buttonText: 'Get Image ',
+    buttonText: initialBackgroundButtonText,
     blurHash: defaultBlurHash
 };
 
@@ -34,7 +34,7 @@ export const background = createSlice({
             state.uri = action.payload.uri;
             state.blurHash = action.payload.blurHash;
             state.isLoaded = false;
-            state.buttonText = loadedButtonText;
+            state.buttonText = loadedBackgroundButtonText;
         },
         resetBackground: state => {
             state.id = '';

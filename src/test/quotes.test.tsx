@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import quotesReducer from '../features/quotes/quotesSlice';
+import quotesReducer, { setNextQuoteIndex, updateRandomQuoteIndex } from '../features/quotes/quotesSlice';
 import { selectQuote, loadQuotes, updateQuoteIndex, loadQuotesAsync } from '../features/quotes/quotesSlice';
 import { Quotes, LOGIC_ERROR_STATUS, LOGIC_ERROR_MESSAGE, INTERNAL_ERROR_MESSAGE, Quote, INTERNAL_ERROR_STATUS } from '../types';
 
@@ -9,11 +9,23 @@ const initialState: Quotes = {
 }
 
 const newState: Quotes = {
-    data: [{
-        id: 1,
-        author: 'author',
-        quote: 'quote'
-    }],
+    data: [
+        {
+            id: 1,
+            author: 'author-1',
+            quote: 'quote-1'
+        },
+        {
+            id: 2,
+            author: 'author-2',
+            quote: 'quote-2'
+        },
+        {
+            id: 3,
+            author: 'author-3',
+            quote: 'quote-3'
+        },
+    ],
     selectedIndex: 0
 };
 
@@ -32,14 +44,40 @@ describe('quotesSlice tests', () => {
     it('loadQuotes reducer - data is updated', () => {
         const state = quotesReducer(initialState, loadQuotes(newState));
 
-        expect(state.data.length).toBe(1);
-        expect(state.data[0].quote).toBe('quote');
+        expect(state.data.length).toBe(3);
+        expect(state.data[0].quote).toBe('quote-1');
+        expect(state.data[1].quote).toBe('quote-2');
+        expect(state.data[2].quote).toBe('quote-3');
       });
       
     it('updateQuoteIndex reducer - index is updated', () => {
         const state = quotesReducer(initialState, updateQuoteIndex(3));
         
         expect(state.selectedIndex).toBe(3);
+    });
+
+    it('updateRandomQuoteIndex reducer - new index is not old index', () => {
+        const state = quotesReducer(initialState, updateRandomQuoteIndex());
+        
+        expect(state.selectedIndex).not.toBe(0);
+    });
+
+    it('setNextQuoteIndex reducer - end to next index goes to zero', () => {
+        const state = quotesReducer(initialState, setNextQuoteIndex());
+        
+        expect(state.selectedIndex).not.toBe(0);
+    });
+
+    it('setNextQuoteIndex reducer - next index goes up', () => {
+        
+    });
+
+    it('setPreviousQuoteIndex reducer -  zero to previous index goes to end', () => {
+        
+    });
+
+    it('setPreviousQuoteIndex reducer -  previous index goes down', () => {
+        
     });
 
     it('selectQuote thunk - invalid index is caught', () => {
@@ -79,7 +117,7 @@ describe('quotesSlice tests', () => {
 
         const dispatch = (action: PayloadAction<any>) => result.push(action); 
         const getState = () => ({quotes: {...initialState}});
-        const thunk: any = loadQuotesAsync({});
+        const thunk: any = loadQuotesAsync({}); // invalid mock
 
         await thunk(dispatch, getState, fulfilled);
 

@@ -12,9 +12,9 @@ export function Background() {
 
     return <>
         <div className="flex flex-col m-1 items-center" id="background">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6 animate-pulse"
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-6 animate-pulse"
                 onClick={() => dispatch(requestBackground())}>
-                <p>{backgroundState.buttonText} &#10132;</p>
+                <p>{backgroundState.buttonText}</p>
             </button>
             <div className="flex flex-col items-center">
                 {backgroundState.isLoaded === false &&
@@ -27,7 +27,6 @@ export function Background() {
                         punch={1} 
                     /> 
                 }
-                
                 <div>
                     <img 
                     alt="background-quote" 

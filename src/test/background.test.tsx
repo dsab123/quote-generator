@@ -1,14 +1,13 @@
-import { setBackgroundLoaded, changeBackground, resetBackground, defaultBlurHash, requestBackground, backgroundApiServerError } from '../features/background/backgroundSlice';
+import { setBackgroundLoaded, changeBackground, resetBackground, defaultBlurHash, requestBackground, backgroundApiServerError, initialBackgroundButtonText } from '../features/background/backgroundSlice';
 import backgroundReducer from '../features/background/backgroundSlice';
-import { Background, INTERNAL_ERROR_STATUS, LOGIC_ERROR_MESSAGE, LOGIC_ERROR_STATUS, OK_STATUS } from '../types';
+import { Background, INTERNAL_ERROR_STATUS, OK_STATUS } from '../types';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { createApi } from 'unsplash-js';
 
 const initialState: Background = {
     id: '',
     isLoaded: false,
     uri: '',
-    buttonText: 'Get Image ',
+    buttonText: initialBackgroundButtonText,
     blurHash: defaultBlurHash
 }
 
