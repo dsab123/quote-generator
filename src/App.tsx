@@ -1,23 +1,25 @@
 import React, { useEffect } from 'react';
-import { Background } from './features/background/Background';
-import { Quotes } from './features/quotes/Quotes';
-import { Error } from './features/error/Error';
-import 'tailwindcss/tailwind.css';
+import { Backgrounds } from './components/Backgrounds';
+import { Quotes } from './components/Quotes';
+import { Error } from './components/Error';
 import { useDispatch } from 'react-redux';
-import { loadQuotesAsync } from './features/quotes/quotesSlice';
+import { loadQuotesAsync } from './store/quotesSlice';
+import 'tailwindcss/tailwind.css';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {dispatch(loadQuotesAsync())}, [dispatch]);
 
   return (  
-    <div className="App text-center flex flex-col justify-center">
+    <div className="App text-center flex flex-col justify-center items-center">
       <Error />
       <div className="flex justify-center">
         <img alt="background" src={process.env.PUBLIC_URL + '/logo_large.png'} />
       </div>
-      <Background />
-      <Quotes />
+      {/* <div className={backgroundsState.isCurrentBackgroundLoaded ? "flex " : "flex opacity-50"}> */}
+        <Backgrounds />
+        <Quotes />
+      {/* </div> */}
     </div>
   );
 }

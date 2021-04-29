@@ -1,22 +1,70 @@
-import { setBackgroundLoaded, changeBackground, resetBackground, defaultBlurHash, requestBackground, backgroundApiServerError, initialBackgroundButtonText } from '../features/background/backgroundSlice';
-import backgroundReducer from '../features/background/backgroundSlice';
-import { Background, INTERNAL_ERROR_STATUS, OK_STATUS } from '../types';
+import { 
+    setBackgroundLoaded, 
+    loadNewBackground, 
+    requestBackground, 
+    backgroundApiServerError, 
+    setRandomBackgroundIndex, 
+    setNextBackgroundIndex, 
+    setPreviousBackgroundIndex, 
+    increaseLeftPercentage, 
+    increaseTopPercentage, 
+    decreaseTopPercentage,
+    decreaseLeftPercentage
+} from 'store/backgroundsSlice';
+import backgroundReducer from 'store/backgroundsSlice';
+import { 
+    Background, 
+    Backgrounds, 
+    INTERNAL_ERROR_STATUS, 
+    OK_STATUS 
+} from 'types';
 import { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: Background = {
-    id: '',
-    isLoaded: false,
-    uri: '',
-    buttonText: initialBackgroundButtonText,
-    blurHash: defaultBlurHash
+const initialState: Backgrounds = {
+    data: [],
+    selectedIndex: -1,
+    isCurrentBackgroundLoaded: false,
+    topPercentage: 50,
+    leftPercentage: 50
 }
 
-const newState: Background = {
-    id: '2',
-    isLoaded: true,
-    uri: 'some uri or somethign',
-    buttonText: 'another!',
-    blurHash: 'ImABlurHashMan'
+const newImage: Background = {
+    id: 'new',
+    uri: 'new-uri',
+    blurHash: 'new-blurHash'
+}
+
+const oneElementState: Backgrounds = {
+    data: [
+        {
+            id: '1',
+            uri: 'uri-1',
+            blurHash: 'blurHash1'
+        }
+    ],
+    selectedIndex: -1,
+    isCurrentBackgroundLoaded: false,
+    topPercentage: 50,
+    leftPercentage: 50
+};
+
+const twoElementState: Backgrounds = {
+    data: [
+        {
+            id: '1',
+            uri: 'uri-1',
+            blurHash: 'blurHash1'
+        },
+        {
+            id: '2',
+            uri: 'uri-2',
+            blurHash: 'blurHash2'
+        }
+    ],
+    selectedIndex: 0,
+    isCurrentBackgroundLoaded: false,
+    topPercentage: 50,
+    leftPercentage: 50
 };
 
 function createApiClientMock(a: any, status: number): any {
@@ -38,30 +86,83 @@ function createApiClientMock(a: any, status: number): any {
     }
 }
 
-describe('backgroundSlice tests', () => {
-    it('setBackgroundLoaded reducer - isLoaded is set', () => {
+describe('backgroundaSlice tests', () => {
+    it('setBackgroundLoaded reducer - ', () => {
         const state = backgroundReducer(initialState, setBackgroundLoaded());
 
-        expect(state.isLoaded).toBeTruthy();
+        expect(state.isCurrentBackgroundLoaded).toBeTruthy();
     });
 
-    it('changeBackground reducer - background is changed', () => {
-        const state = backgroundReducer(initialState, changeBackground({
-            ...newState
+    it('loadNewBackground reducer - background is changed', () => {
+        const state = backgroundReducer(initialState, loadNewBackground({
+            ...newImage
         }));
 
-        expect(state.isLoaded).toBeFalsy();
-        expect(state.blurHash).toEqual('ImABlurHashMan');
-        expect(state.uri).toEqual('some uri or somethign');
-        expect(state.id).toBe('2');
+        expect(state.isCurrentBackgroundLoaded).toBeFalsy();
     });
 
-    it ('resetBackground reducer - background is reset', () => {
-        const state = backgroundReducer(initialState, resetBackground());
+    it('setRandomBackgroundIndex - empty data, returns 0', () => {
+        const state = backgroundReducer(initialState, setRandomBackgroundIndex());
 
-        expect(state.uri).toEqual('');
-        expect(state.id).toBe('');
-        expect(state.blurHash).toEqual(defaultBlurHash);
+        expect(state.selectedIndex).toBe(-1);
+    });
+
+    it('setRandomBackgroundIndex - one-element data, returns 0', () => {
+        const state = backgroundReducer(oneElementState, setRandomBackgroundIndex());
+
+        expect(state.selectedIndex).toBe(0);
+    });
+
+    it('setRandomBackgroundIndex - multiple-element data, returns not-previous ', () => {
+        const state = backgroundReducer(twoElementState, setRandomBackgroundIndex());
+
+        expect(state.selectedIndex).not.toBe(0);
+    });
+
+    it('setNextBackgroundIndex - returns 0 when wraps "backward" on data', () => {
+        const state = backgroundReducer({
+            ...twoElementState, selectedIndex: 1
+        }, setNextBackgroundIndex());
+
+        expect(state.selectedIndex).toBe(0);
+    });
+    
+    it('setPreviousBackgroundIndex - returns -1 when empty data', () => {
+        const state = backgroundReducer(initialState, setPreviousBackgroundIndex());
+
+        expect(state.selectedIndex).toBe(-1);
+    });
+
+    it('setPreviousBackgroundIndex - returns last element when wraps "forward" on data', () => {
+        const state = backgroundReducer({
+            ...twoElementState, selectedIndex: 0
+        }, setNextBackgroundIndex());
+
+        expect(state.selectedIndex).toBe(1);
+    });
+
+    it('increaseLeftPercentage - left percentage increased', () => {
+        const state = backgroundReducer(initialState, increaseLeftPercentage());
+
+        expect(state.leftPercentage).toBe(55);
+    });
+
+    it('decreaseLeftPercentage - left percentage decreased', () => {
+        const state = backgroundReducer(initialState, decreaseLeftPercentage());
+
+        expect(state.leftPercentage).toBe(45);
+    });
+
+    it('increaseTopPercentage - top percentage increased', () => {
+        const state = backgroundReducer(initialState, increaseTopPercentage());
+
+        expect(state.topPercentage).toBe(55);
+    });
+
+    it('decreaseTopPercentage - top percentage decreased', () => {
+        const state = backgroundReducer(initialState, decreaseTopPercentage());
+
+        expect(state.topPercentage).toBe(45);
     });
 
     it('requestBackground thunk - non-ok result raises error', async () => {
@@ -79,7 +180,7 @@ describe('backgroundSlice tests', () => {
         expect(result[0].payload).toStrictEqual(backgroundApiServerError);
     });
 
-    it('requestBackground thunk - ok result dispatches changeBackground', async () => {
+    it('requestBackground thunk - ok result dispatches loadNewBackground', async () => {
         let result: Array<PayloadAction> = [];
 
         const dispatch = (action: PayloadAction<any>) => result.push(action);
@@ -90,13 +191,11 @@ describe('backgroundSlice tests', () => {
         await thunk(dispatch, getState);
 
         expect(result.length).toBe(1);
-        expect(result[0].type).toBe('background/changeBackground');
+        expect(result[0].type).toBe('backgrounds/loadNewBackground');
         expect(result[0].payload).toStrictEqual({
             id: 'id',
             uri: 'urlq=75&fm=jpg&w=500&h=500&fit=crop',
-            blurHash: 'blurHash',
-            isLoaded: false,
-            buttonText: ''
+            blurHash: 'blurHash'
         });
     });
 

@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action, Middleware } from '@reduxjs/toolkit';
-import backgroundReducer from '../features/background/backgroundSlice';
-import errorReducer from '../features/error/errorSlice';
-import quotesReducer from '../features/quotes/quotesSlice';
+import errorReducer from './errorSlice';
+import backgroundsReducer from './backgroundsSlice';
+import quotesReducer from './quotesSlice';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export const store = configureStore({
   reducer: {
-    background: backgroundReducer,
+    backgrounds: backgroundsReducer,
     error: errorReducer,
     quotes: quotesReducer
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { dismissError, selectError } from './errorSlice';
+import { dismissError, selectError } from 'store/errorSlice';
 import 'tailwindcss/tailwind.css';
 
 export function Error() {

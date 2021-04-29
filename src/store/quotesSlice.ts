@@ -1,12 +1,14 @@
-import { LOGIC_ERROR_MESSAGE, LOGIC_ERROR_STATUS, INTERNAL_ERROR_MESSAGE, INTERNAL_ERROR_STATUS } from './../../types';
+import { 
+    LOGIC_ERROR_MESSAGE, 
+    LOGIC_ERROR_STATUS, 
+    INTERNAL_ERROR_MESSAGE, 
+    INTERNAL_ERROR_STATUS 
+} from 'types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
-import { raiseError } from '../error/errorSlice';
-import { Quotes } from '../../types';
-import { myFaunaClient } from '../../utils/Fauna';
-
-export const initialQuotesButtonText = 'load quotes';
-export const randomQuotesButtonText = 'random quote!'
+import { AppThunk, RootState } from 'store';
+import { raiseError } from 'store/errorSlice';
+import { Quotes } from 'types';
+import { myFaunaClient } from 'utils/Fauna';
 
 const initialState: Quotes = {
     data: [],
@@ -20,10 +22,10 @@ export const quotes = createSlice({
         loadQuotes: (state, action: PayloadAction<Quotes>) => {
             state.data = action.payload.data;
         },
-        updateQuoteIndex: (state, action: PayloadAction<number>) => {
+        setQuoteIndex: (state, action: PayloadAction<number>) => {
             state.selectedIndex = action.payload;
         },
-        updateRandomQuoteIndex: (state) => {
+        setRandomQuoteIndex: (state) => {
             // returns an index within our data array bounds
             let candidateIndex = 0;
 
@@ -42,11 +44,32 @@ export const quotes = createSlice({
             } else {
                 state.selectedIndex = Math.abs((state.selectedIndex - 1) % state.data.length);
             }
+        },
+        setItalics: (state, action: PayloadAction<boolean>) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.isItalics = action.payload as boolean;
+        },
+        setBold: (state, action: PayloadAction<boolean>) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.isBold = action.payload as boolean;
+        },
+        setUnderlined: (state, action: PayloadAction<boolean>) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.isUnderlined = action.payload as boolean;
         }
     }
 });
 
-export const { loadQuotes, updateQuoteIndex, updateRandomQuoteIndex, setNextQuoteIndex, setPreviousQuoteIndex } = quotes.actions;
+export const { 
+    loadQuotes, 
+    setQuoteIndex, 
+    setRandomQuoteIndex, 
+    setNextQuoteIndex, 
+    setPreviousQuoteIndex, 
+    setItalics, 
+    setUnderlined, 
+    setBold 
+} = quotes.actions;
 
 export const loadQuotesAsync = (quotesClient: any = myFaunaClient): AppThunk => async (dispatch, getState, axios) => {
     try {
@@ -73,10 +96,10 @@ export const selectQuote = (index: number): AppThunk => async (dispatch, getStat
         }));
 
         // cover over this error, reset the index
-        return dispatch(updateQuoteIndex(0));
+        return dispatch(setQuoteIndex(0));
     }
 
-    return dispatch(updateQuoteIndex(index));
+    return dispatch(setQuoteIndex(index));
 }
 
 // this would be the mapper

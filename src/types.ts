@@ -1,14 +1,15 @@
 export interface Background {
     id: string,
     uri: string,
-    isLoaded: boolean,
-    blurHash?: string,
-    buttonText: string
+    blurHash: string,
 };
 
 export interface Backgrounds {
     data: Array<Background>,
-    selectedIndex: number
+    selectedIndex: number,
+    isCurrentBackgroundLoaded: boolean,
+    topPercentage: number,
+    leftPercentage: number
 }
 
 export interface Error {
@@ -20,13 +21,18 @@ export interface Error {
 export interface Quote {
     id: number,
     author: string,
-    quote: string
+    quote: string,
+    isItalics: boolean,
+    isBold: boolean,
+    isUnderlined: boolean
 };
 
 export interface Quotes {
     data: Array<Quote>,
     selectedIndex: number
 }
+
+export const randomButtonText = 'random!';
 
 export const OK_STATUS = 200;
 
