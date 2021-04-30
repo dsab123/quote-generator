@@ -23,8 +23,7 @@ const initialState: Backgrounds = {
 };
 
 const unsplashApiClient = createApi({
-    accessKey: 'Xu20sZlB4AW-AiyA3rIGlY7AhjwlUrjPB1MEEjKdQUk' 
-    // todo move to env.local
+    accessKey: `${process.env.REACT_APP_UNSPLASH_API_KEY}`
   });
 
 export const backgrounds = createSlice({
