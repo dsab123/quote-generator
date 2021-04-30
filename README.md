@@ -4,7 +4,7 @@ Hai, this is a quote generator I'm building for personal use with danielsabbagh.
 
 Here's what it looks like right now!  
 <br />  
-<img src="public/quote-generator-full.png?raw=true" alt="Quote Generator Logo" width="500"/>  
+<img src="public/quote-generator-full.png?raw=true" style="margin:auto" alt="Quote Generator Logo" width="500"/>  
 <br />
 ## Justification
 
@@ -23,21 +23,21 @@ This brings us to a brief survey of the stack.
 
 ## Stack
 
-### React and Redux Tooklit
+### <img src="public/redux.png?raw=true" alt="Redux Logo" width="25"/> React and Redux Tooklit
 
 We'd used Redux in a few production projects at my current job, but I didn't much like the file structure that Redux lends itself to, which requires having fifty files open to make a change across one 'slice' of the domain. Lo and behold, the Redux team released Redux toolkit some years back to address this very problem, plus a few others. The toolkit also removes the need for useless const actions, and puts all my store-specific code in one file.
 
-### Fauna
+### <img src="public/faunadb.png?raw=true" alt="Redux Logo" width="25"/> Fauna
 
 I'd watched a few videos on FaunaDB, and thought it was way cool that it takes advantage of multiple database paradigms. I don't know GraphQL yet, but it seems rad that I can use Fauna for both my current document collection (which is for this app just a simple list of quotes, more below) as well as a future graph schema (is schema the right word here, or would it be implementation? hmm..)
 
 As it turns out, fauna was so easy to integrate that I haven't touched it since I got it running. My use case is simply to retrieve a list of quotes I've uploaded to the server, and that took about an hour to figure out from start to back. The FQL threw me for a little loop, but my query was simple enough that I didn't have to learn too much upfront.
 
-### Tailwind CSS
+### <img src="public/tailwind.png?raw=true" alt="Redux Logo" width="25"/> Tailwind CSS
 
 As with fauna, I'd watched a few YouTube videos on tailwind and was hit with the painful realization that I tweak CSS in my apps WAY TOO OFTEN. This is in large part a symptom of my lack of design skills and experience, i.e. I don't generally design the UIs for my side project apps upfront. In lieu of my forthcoming design skills, which don't exist in tangible coherent form yet, Tailwind is nice because I can just throw classes at my markup. I love the opinionated nature of the tool. It's been a bother in a few cases (it took quite a few minutes to figure out how to disable pulse animation on a disabled button), but the time-saving improvments are drastic. I imagine even the CSS pro would find it useful as a prototyping tool. So I'm taking the investment to learn it, which boils down to ⌘-K'ing all over their docs. I love it.
 
-### Unsplash
+### <img src="public/unsplash.png?raw=true" alt="Redux Logo" width="25"/> Unsplash
 
 What's a quote image generator without an actual image, right? For the images, I'm using Unsplash. Their javascript client is easy to set up, and the quality of their images is stunning. Simple enough. And free.
 
