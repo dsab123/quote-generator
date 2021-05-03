@@ -56,6 +56,22 @@ export const quotes = createSlice({
         setUnderlined: (state, action: PayloadAction<boolean>) => {
             const selectedQuote = state.data[state.selectedIndex];
             selectedQuote.isUnderlined = action.payload as boolean;
+        },
+        increaseLeftPercentage: (state) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.leftPercentage += 5;
+        },
+        decreaseLeftPercentage: (state) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.leftPercentage -= 5;
+        },
+        increaseTopPercentage: (state) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.topPercentage += 5;
+        },
+        decreaseTopPercentage: (state) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.topPercentage -= 5;
         }
     }
 });
@@ -68,7 +84,11 @@ export const {
     setPreviousQuoteIndex, 
     setItalics, 
     setUnderlined, 
-    setBold 
+    setBold,
+    increaseLeftPercentage,
+    decreaseLeftPercentage,
+    increaseTopPercentage,
+    decreaseTopPercentage
 } = quotes.actions;
 
 export const loadQuotesAsync = (quotesClient: any = myFaunaClient): AppThunk => async (dispatch, getState, axios) => {

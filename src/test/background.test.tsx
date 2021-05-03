@@ -6,10 +6,6 @@ import {
     setRandomBackgroundIndex, 
     setNextBackgroundIndex, 
     setPreviousBackgroundIndex, 
-    increaseLeftPercentage, 
-    increaseTopPercentage, 
-    decreaseTopPercentage,
-    decreaseLeftPercentage
 } from 'store/backgroundsSlice';
 import backgroundReducer from 'store/backgroundsSlice';
 import { 
@@ -23,9 +19,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 const initialState: Backgrounds = {
     data: [],
     selectedIndex: -1,
-    isCurrentBackgroundLoaded: false,
-    topPercentage: 50,
-    leftPercentage: 50
+    isCurrentBackgroundLoaded: false
 }
 
 const newImage: Background = {
@@ -43,9 +37,8 @@ const oneElementState: Backgrounds = {
         }
     ],
     selectedIndex: -1,
-    isCurrentBackgroundLoaded: false,
-    topPercentage: 50,
-    leftPercentage: 50
+    isCurrentBackgroundLoaded: false
+    
 };
 
 const twoElementState: Backgrounds = {
@@ -62,9 +55,7 @@ const twoElementState: Backgrounds = {
         }
     ],
     selectedIndex: 0,
-    isCurrentBackgroundLoaded: false,
-    topPercentage: 50,
-    leftPercentage: 50
+    isCurrentBackgroundLoaded: false
 };
 
 function createApiClientMock(a: any, status: number): any {
@@ -139,30 +130,6 @@ describe('backgroundaSlice tests', () => {
         }, setNextBackgroundIndex());
 
         expect(state.selectedIndex).toBe(1);
-    });
-
-    it('increaseLeftPercentage - left percentage increased', () => {
-        const state = backgroundReducer(initialState, increaseLeftPercentage());
-
-        expect(state.leftPercentage).toBe(55);
-    });
-
-    it('decreaseLeftPercentage - left percentage decreased', () => {
-        const state = backgroundReducer(initialState, decreaseLeftPercentage());
-
-        expect(state.leftPercentage).toBe(45);
-    });
-
-    it('increaseTopPercentage - top percentage increased', () => {
-        const state = backgroundReducer(initialState, increaseTopPercentage());
-
-        expect(state.topPercentage).toBe(55);
-    });
-
-    it('decreaseTopPercentage - top percentage decreased', () => {
-        const state = backgroundReducer(initialState, decreaseTopPercentage());
-
-        expect(state.topPercentage).toBe(45);
     });
 
     it('requestBackground thunk - non-ok result raises error', async () => {

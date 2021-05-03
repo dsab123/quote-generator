@@ -4,7 +4,11 @@ import quotesReducer, {
     setItalics, 
     setNextQuoteIndex, 
     setRandomQuoteIndex, 
-    setUnderlined 
+    setUnderlined,
+    increaseLeftPercentage, 
+    increaseTopPercentage, 
+    decreaseTopPercentage,
+    decreaseLeftPercentage
 } from 'store/quotesSlice';
 import { 
     selectQuote, 
@@ -33,7 +37,9 @@ const newState: Quotes = {
             quote: 'quote-1',
             isItalics: false,
             isBold: false,
-            isUnderlined: false
+            isUnderlined: false,
+            topPercentage: 50,
+            leftPercentage: 50
         },
         {
             id: 2,
@@ -41,7 +47,9 @@ const newState: Quotes = {
             quote: 'quote-2',
             isItalics: false,
             isBold: false,
-            isUnderlined: false
+            isUnderlined: false,
+            topPercentage: 50,
+            leftPercentage: 50
         },
         {
             id: 3,
@@ -49,7 +57,9 @@ const newState: Quotes = {
             quote: 'quote-3',
             isItalics: false,
             isBold: false,
-            isUnderlined: false
+            isUnderlined: false,
+            topPercentage: 50,
+            leftPercentage: 50
         },
     ],
     selectedIndex: 0
@@ -104,6 +114,35 @@ describe('quotesSlice tests', () => {
 
     it('setPreviousQuoteIndex reducer -  previous index goes down', () => {
         
+    });
+
+
+    it('increaseLeftPercentage - left percentage increased', () => {
+        const state = quotesReducer(newState, increaseLeftPercentage());
+        const quote = state.data[0];
+
+        expect(quote.leftPercentage).toBe(55);
+    });
+
+    it('decreaseLeftPercentage - left percentage decreased', () => {
+        const state = quotesReducer(newState, decreaseLeftPercentage());
+        const quote = state.data[0];
+
+        expect(quote.leftPercentage).toBe(45);
+    });
+
+    it('increaseTopPercentage - top percentage increased', () => {
+        const state = quotesReducer(newState, increaseTopPercentage());
+        const quote = state.data[0];
+
+        expect(quote.topPercentage).toBe(55);
+    });
+
+    it('decreaseTopPercentage - top percentage decreased', () => {
+        const state = quotesReducer(newState, decreaseTopPercentage());
+        const quote = state.data[0];
+
+        expect(quote.topPercentage).toBe(45);
     });
 
     it('setItalics reducer - sets italics on quote', () => {

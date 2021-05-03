@@ -7,9 +7,7 @@ export interface Background {
 export interface Backgrounds {
     data: Array<Background>,
     selectedIndex: number,
-    isCurrentBackgroundLoaded: boolean,
-    topPercentage: number,
-    leftPercentage: number
+    isCurrentBackgroundLoaded: boolean
 }
 
 export interface Error {
@@ -24,7 +22,9 @@ export interface Quote {
     quote: string,
     isItalics: boolean,
     isBold: boolean,
-    isUnderlined: boolean
+    isUnderlined: boolean,
+    topPercentage: number,
+    leftPercentage: number
 };
 
 export interface Quotes {

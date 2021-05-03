@@ -1,3 +1,4 @@
+import { CreateQuote } from './QuoteFactory';
 import { Quote } from "types";
 const faunadb = require('faunadb');
 const faunaClient = new faunadb.Client({ secret: `${process.env.REACT_APP_FAUNA_API_KEY}` });
@@ -12,15 +13,7 @@ export const myFaunaClient = {
             )) as {data: Array<{data: Quote}>};
 
         return quotesRaw.data.map((x: { data: Quote }) => ({
-            id: x.data.id,
-            author: x.data.author,
-            quote: x.data.quote,
-            
-            // I'm not sure how to avoid adding these props into the quote object; I don't want to create a fauna quote hybrid, and I don't
-            // wanna use a factory pattern...
-            isItalics: false,
-            isBold: false,
-            isUnderlined: false
+            ...CreateQuote(x.data.id, x.data.author, x.data.quote)
         }));
     }
 }

@@ -7,7 +7,9 @@ import {
     setBold,
     selectQuotes,
     setItalics,
-    setUnderlined
+    setUnderlined,
+    increaseTopPercentage,
+    decreaseTopPercentage
 } from 'store/quotesSlice';
 import {  
     requestBackground, 
@@ -15,8 +17,6 @@ import {
     setNextBackgroundIndex, 
     setPreviousBackgroundIndex, 
     setRandomBackgroundIndex,
-    increaseTopPercentage, 
-    decreaseTopPercentage 
 } from 'store/backgroundsSlice';
 import 'tailwindcss/tailwind.css';
 import { randomButtonText } from 'types';

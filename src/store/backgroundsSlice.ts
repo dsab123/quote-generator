@@ -18,8 +18,6 @@ const initialState: Backgrounds = {
     data: [],
     selectedIndex: -1,
     isCurrentBackgroundLoaded: false,
-    topPercentage: 50,
-    leftPercentage: 50
 };
 
 const unsplashApiClient = createApi({
@@ -60,18 +58,6 @@ export const backgrounds = createSlice({
             if (state.data.length !== 0) {
                 state.selectedIndex = Math.abs((state.selectedIndex - 1) % state.data.length);
             }
-        },
-        increaseLeftPercentage: (state) => {
-            state.leftPercentage += 5;
-        },
-        decreaseLeftPercentage: (state) => {
-            state.leftPercentage -= 5;
-        },
-        increaseTopPercentage: (state) => {
-            state.topPercentage += 5;
-        },
-        decreaseTopPercentage: (state) => {
-            state.topPercentage -= 5;
         }
     }
 });
@@ -82,10 +68,6 @@ export const {
     setRandomBackgroundIndex,
     setNextBackgroundIndex,
     setPreviousBackgroundIndex,
-    increaseLeftPercentage,
-    decreaseLeftPercentage,
-    increaseTopPercentage,
-    decreaseTopPercentage
 } = backgrounds.actions;
 
 // todo daniel add search parameter instead of hardcoding 'sky'

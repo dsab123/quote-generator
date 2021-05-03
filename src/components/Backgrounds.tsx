@@ -34,6 +34,8 @@ export function Backgrounds() {
                         punch={1} 
                     /> 
                 }
+
+                {quote && 
                 <div>
                     <img 
                     alt="background-quote" 
@@ -45,22 +47,23 @@ export function Backgrounds() {
 
                     <div 
                     className={`absolute 
-                        ${quote?.isBold ? " font-bold " : ""} 
-                        ${quote?.isItalics ? " italic " : ""} 
-                        ${quote?.isUnderlined ? " underline " : ""}`} 
+                        ${quote.isBold ? " font-bold " : ""} 
+                        ${quote.isItalics ? " italic " : ""} 
+                        ${quote.isUnderlined ? " underline " : ""}`} 
                     style={{
-                         top: `${backgroundsState.topPercentage}%`,
-                         left: `${backgroundsState.leftPercentage}%`,
+                         top: `${quote.topPercentage}%`,
+                         left: `${quote.leftPercentage}%`,
                          transform: 'translate(-50%, -50%)'
                     }}>
                         <p className="text-2xl">
-                            {quote?.quote}
+                            {quote.quote}
                         </p>
                         <p className="text-md">
-                            {quote?.author}
+                            {quote.author}
                         </p>
                     </div>
                 </div>
+                }
             </div>
         </div>
     </>;
