@@ -10,9 +10,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {dispatch(loadQuotesAsync())}, [dispatch]);
 
-  return (  
+  return <>  
+    <Error />
     <div className="App text-center flex flex-col justify-center items-center">
-      <Error />
       <div className="flex justify-center">
         <img alt="background" src={process.env.PUBLIC_URL + '/logo_large.png'} />
       </div>
@@ -21,7 +21,7 @@ function App() {
         <Quotes />
       {/* </div> */}
     </div>
-  );
+    </>;
 }
 
 export default App;
