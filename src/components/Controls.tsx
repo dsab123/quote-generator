@@ -85,16 +85,16 @@ export function Controls() {
                 className="bg-red-400 text-white hover:bg-red-600 focus:ring focus:ring-offset-1 disabled:bg-gray-500 disabled:text-gray-200 font-bold py-2 px-4 rounded xs:mt-2 ml-3"
                 disabled={backgroundsState.data.length <= 1}
                 onClick={() => dispatch(setPreviousBackgroundIndex())}>
-                ← prev
+                ←&nbsp;prev
             </button>
             <button
-                className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded  ml-3"
+                className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded xs:mt-2 ml-3"
                 onClick={() => 
                     backgroundsIndex >= backgroundsState.data.length - 1 
                     ? dispatch(requestBackground())
                     : dispatch(setNextBackgroundIndex())
                 }>
-                next →
+                next&nbsp;→
             </button>
         </div>
 
