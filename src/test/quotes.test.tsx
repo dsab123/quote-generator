@@ -8,7 +8,8 @@ import quotesReducer, {
     increaseLeftPercentage, 
     increaseTopPercentage, 
     decreaseTopPercentage,
-    decreaseLeftPercentage
+    decreaseLeftPercentage,
+    setFontFamily
 } from 'store/quotesSlice';
 import { 
     selectQuote, 
@@ -39,7 +40,8 @@ const newState: Quotes = {
             isBold: false,
             isUnderlined: false,
             topPercentage: 50,
-            leftPercentage: 50
+            leftPercentage: 50,
+            fontFamily: ''
         },
         {
             id: 2,
@@ -49,7 +51,8 @@ const newState: Quotes = {
             isBold: false,
             isUnderlined: false,
             topPercentage: 50,
-            leftPercentage: 50
+            leftPercentage: 50,
+            fontFamily: ''
         },
         {
             id: 3,
@@ -59,7 +62,8 @@ const newState: Quotes = {
             isBold: false,
             isUnderlined: false,
             topPercentage: 50,
-            leftPercentage: 50
+            leftPercentage: 50,
+            fontFamily: ''
         },
     ],
     selectedIndex: 0
@@ -179,6 +183,12 @@ describe('quotesSlice tests', () => {
         const state = quotesReducer(newState, setBold(false));
         
         expect(state.data[state.selectedIndex].isBold).toBe(false);
+    });
+
+    it('setFontFamily reducer - fontFamily is set', () => {
+        const state = quotesReducer(newState, setFontFamily('fruitSalad'));
+        
+        expect(state.data[state.selectedIndex].fontFamily).toBe('fruitSalad');
     });
 
 

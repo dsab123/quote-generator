@@ -72,6 +72,10 @@ export const quotes = createSlice({
         decreaseTopPercentage: (state) => {
             const selectedQuote = state.data[state.selectedIndex];
             selectedQuote.topPercentage -= 5;
+        },
+        setFontFamily: (state, action: PayloadAction<string>) => {
+            const selectedQuote = state.data[state.selectedIndex];
+            selectedQuote.fontFamily = action.payload as string;
         }
     }
 });
@@ -88,7 +92,8 @@ export const {
     increaseLeftPercentage,
     decreaseLeftPercentage,
     increaseTopPercentage,
-    decreaseTopPercentage
+    decreaseTopPercentage,
+    setFontFamily
 } = quotes.actions;
 
 export const loadQuotesAsync = (quotesClient: any = myFaunaClient): AppThunk => async (dispatch, getState, axios) => {

@@ -4,7 +4,9 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      'display': ['Oswald', '"Open Sans"', 'Roboto']
+      'droid-serif': ['"Droid Serif"'],
+      'droid-sans': ['"Droid Sans'],
+      'open-sans': ['"Open Sans"']
     },
     screens: {
       'xs': '320px',

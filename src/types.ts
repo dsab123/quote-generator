@@ -24,7 +24,8 @@ export interface Quote {
     isBold: boolean,
     isUnderlined: boolean,
     topPercentage: number,
-    leftPercentage: number
+    leftPercentage: number,
+    fontFamily: string
 };
 
 export interface Quotes {

@@ -20,6 +20,7 @@ import {
 } from 'store/backgroundsSlice';
 import 'tailwindcss/tailwind.css';
 import { randomButtonText } from 'types';
+import { FontControl } from 'components/FontControl';
 
 // todo rename this pls
 export function Controls() {
@@ -57,6 +58,7 @@ export function Controls() {
                 onClick={() => dispatch(increaseTopPercentage())}>
                 ↓
             </button>
+            <FontControl />
             <button
                 className="bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-4 rounded xs:mt-2 ml-3"
                 onClick={() => dispatch(setBold(!quote.isBold))}>
